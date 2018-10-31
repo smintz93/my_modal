@@ -1,13 +1,61 @@
-import React from 'react';
+import React, { Component } from "react";
+import Modal from "react-modal";
+import "./ViewOne.css";
 
-import './ViewOne.css'
+let secondTimer;
 
-const viewOne = (props) => {
-	return (
-			<div className="view-one">
-				<h2>I am the main view</h2>
-			</div>	
-		);
+class ViewOne extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      shouldShowModal: false
+    }
+  }
+
+  componentDidMount() {
+    this.timer();
+  }
+
+  timer = () => {
+    setTimeout(() => {
+      this.setState({ shouldShowModal: true });
+      secondTimer = setTimeout(() => {
+        this.redirectUser();
+      }, 20000);
+    }, 3000);
+  }
+
+  closeModal = () => {
+    clearTimeout(secondTimer);
+    this.setState({ shouldShowModal: false }, () => this.timer());
+  }
+
+  redirectUser = () => {
+    this.props.toggleView();
+  }
+
+  render() {
+    return (
+      <div className="view-one">
+        <Modal
+          ariaHideApp={false}
+	      isOpen={this.state.shouldShowModal}
+	      onAfterOpen={this.afterOpenModal}
+	      style={{
+            content: {
+              height: '100px',
+              width: '200px',
+              left: '350px',
+              top: '100px'
+            }
+          }}
+        >
+          <button className="still-there" onClick={this.closeModal}>Are you still there?</button>
+        </Modal>
+        <h2>I am the main view</h2>
+      </div>
+    );
+  }
 }
 
-export default viewOne;
+export default ViewOne;
