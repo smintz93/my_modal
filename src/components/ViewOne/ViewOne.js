@@ -21,8 +21,8 @@ class ViewOne extends Component {
       this.setState({ shouldShowModal: true });
       secondTimer = setTimeout(() => {
         this.redirectUser();
-      }, 20000);
-    }, 3000);
+      }, 5000);
+    }, 10000);
   }
 
   closeModal = () => {
